@@ -1,0 +1,76 @@
+--made by #˞ Owen#9046
+
+-- properties:
+local gui = Instance.new("ScreenGui")
+gui.Name = "PasswordGenerator"
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+local Corner = Instance.new("UICorner")
+local Corner2 = Instance.new("UICorner")
+
+-- create a Frame object for the password generator
+
+local passwordGenerator = Instance.new("Frame")
+passwordGenerator.Name = "PasswordGenerator"
+passwordGenerator.Position = UDim2.new(0.5, -150, 0.5, -100)
+passwordGenerator.Size = UDim2.new(0, 300, 0, 200)
+passwordGenerator.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+passwordGenerator.BorderSizePixel = 0
+passwordGenerator.Parent = gui
+
+Corner.CornerRadius = UDim.new(0, 6)
+Corner.Name = "Corner"
+Corner.Parent = passwordGenerator
+
+
+-- create a TextLabel object for the title of the password generator
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Text = "Password Generator"
+title.Position = UDim2.new(0.5, -75, 0, 10)
+title.Size = UDim2.new(0, 150, 0, 20)
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.BackgroundTransparency = 1
+title.Parent = passwordGenerator
+
+-- create a TextLabel object for displaying the generated password
+local passwordLabel = Instance.new("TextLabel")
+passwordLabel.Name = "PasswordLabel"
+passwordLabel.Text = "Generated password will appear here."
+passwordLabel.Position = UDim2.new(0.5, -100, 0.4, -10)
+passwordLabel.Size = UDim2.new(0, 200, 0, 20)
+passwordLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+passwordLabel.BackgroundTransparency = 1
+passwordLabel.Parent = passwordGenerator
+passwordLabel.TextScaled = true
+
+-- create a TextButton object for generating a new password
+local generateButton = Instance.new("TextButton")
+generateButton.Name = "GenerateButton"
+generateButton.Text = "Generate Password"
+generateButton.Position = UDim2.new(0.5, -75, 0.7, -10)
+generateButton.Size = UDim2.new(0, 150, 0, 20)
+generateButton.Parent = passwordGenerator
+
+Corner2.CornerRadius = UDim.new(0, 6)
+Corner2.Name = "Corner2"
+Corner2.Parent = generateButton
+
+-- create a function to generate a strong password when the generate button is clicked
+local function onGenerateButtonClicked()
+	local password = ""
+	local length = 12 -- you can adjust the length of the generated password
+	local chars = {"abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789", "!@#$%^&*()-_+="}
+	-- the above table contains four different character sets: lowercase letters, uppercase letters, numbers, and special characters
+
+	for i = 1, length do
+		local charSet = chars[math.random(1, 4)] -- randomly select a character set
+		local char = string.char(charSet:byte(math.random(1, #charSet))) -- randomly select a character from the selected set
+		password = password .. char -- append the character to the password
+	end
+
+	passwordLabel.Text = password -- display the generated password
+end
+
+
+-- connect the function to the generate button's MouseButton1Click event
+generateButton.MouseButton1Click:Connect(onGenerateButtonClicked)
